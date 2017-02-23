@@ -1,0 +1,92 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<VehicleProject.Web.Models.VehicleModelIndexVM>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Vehicle Model Index";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<div class="panel panel-primary">
+    <div class="panel-heading panel-head">Vehicle Model Index</div>
+
+    <div class="panel-body">
+
+        <a href="@Url.Action("Create")" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span>Vehicle Model
+        </a>
+
+        <hr/>
+
+        <div>
+            @{
+                var routeValues = new RouteValueDictionary();
+                routeValues.Add("sortTerm", ViewBag.currentSort);
+            }
+
+            @using (Html.BeginForm("Index", "VehicleModel", routeValues, FormMethod.Get)) {
+            <fieldset>
+                Filter:
+                @Html.DropDownList("filterId", ViewBag.dropDownListOptions as SelectList, new { @class = "btn btn-default dropdown-toggle" })
+               
+                <input type="submit" value="Apply Filter" class="btn btn-default" />
+            </fieldset>
+            }
+            <!-- note to self: routeValues not working here-->
+        </div>
+        
+        <table class="table">
+            <tr>
+                <th>                    
+                    ID
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "default", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-down" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByIdDescending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-up" })
+                </th>
+                <th>
+                    Make Name
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByMakeNameAscending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-down" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByMakeNameDescending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-up" })
+                </th>
+                <th>
+                    Model Name
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameAscending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-down" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameDescending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-up" })
+                </th>
+                <th>
+                    Model Abbreviation
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.ModelId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.MakeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.ModelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.ModelAbbr)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Update", new { id = item.ModelId }, new { @class = "btn btn-success" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ModelId }, new { @class = "btn btn-danger" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ModelId }, new { @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+new { page, filterId = ViewBag.currentFilter, sortTerm = ViewBag.currentSort}))

@@ -1,0 +1,67 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<VehicleProject.Web.Models.VehicleMakeIndexUpdateVM>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Vehicle Make Index";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<div class="panel panel-primary">
+    <div class="panel-heading panel-head">Vehicle Make Index</div>
+
+    <div class="panel-body">
+        <a href="@Url.Action("Create")" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span>Vehicle Make
+        </a>
+
+
+        <table class="table">
+            <tr>
+                <th>
+                    Make Id
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "default"}, new { @class= "glyphicon glyphicon-arrow-down" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByIdDescending" }, new { @class = "glyphicon glyphicon-arrow-up" })
+                </th>
+                <th>
+                    Make Name
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameAscending" }, new { @class = "glyphicon glyphicon-arrow-down" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameDescending" }, new { @class = "glyphicon glyphicon-arrow-up" })
+                </th>
+                <th>
+                    Make Abbreviation
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.MakeId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.MakeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(ModelItem => item.MakeAbbr)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Update", new { id = item.MakeId }, new { @class = "btn btn-success" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MakeId }, new { @class = "btn btn-danger" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.MakeId }, new { @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+    </div>
+</div>
+
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+new { page, sortTerm = ViewBag.CurrentSort}))

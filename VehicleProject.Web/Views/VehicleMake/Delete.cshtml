@@ -1,0 +1,89 @@
+﻿@model VehicleProject.Web.Models.VehicleMakeDeleteDetailVM
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Delete Make";
+}
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading panel-head">Delete Make</div>
+    <div class="panel-body">
+        <div>
+            <h3 class="text-danger">Are you sure you Want to delete this make and all it's models?</h3>
+        </div>
+        @using (Html.BeginForm())
+        {
+            <div>
+                <div class="form-gorup">
+                    @Html.LabelFor(model => model.MakeId, new { @class = "col-lg-3 control-label" })
+
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(model => model.MakeId, new { @readonly = "readonly", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-gorup">
+                    @Html.LabelFor(model => model.MakeName, new { @class = "col-lg-3 control-label" })
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(model => model.MakeName, new { @readonly = "readonly", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-gorup">
+                    @Html.LabelFor(model => model.MakeAbbr, new { @class = "col-lg-3 control-label" })
+                    <div class="col-lg-9">
+                        @Html.TextBoxFor(model => model.MakeAbbr, new { @readonly = "readonly", @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <br />
+                @Html.LabelFor(model =>model.MakeModels, new { @class="col-lg-3 control label"})
+                <div class="col-lg-9"></div>
+            </div>
+
+            <div class="form-group">
+                <table class="table">
+                    <tr>                        
+                        <td>
+                            Model Id
+                        </td>
+                        <td>
+                            Model name
+                        </td>
+                        <td>
+                            Model Abbreviation
+                        </td>
+                    </tr>
+                    @foreach (var item in Model.MakeModels)
+                    {
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(ModelItem => item.VehicleMakeId)
+                                @Html.DisplayFor(ModelItem => item.ModelId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(ModelItem => item.ModelName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(ModelItem => item.ModelAbbr)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-9">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+                </div>
+            </div>
+        }
+    </div>
+</div>

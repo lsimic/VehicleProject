@@ -1,0 +1,55 @@
+﻿@model VehicleProject.Web.Models.VehicleModelUpdateDeleteVM
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Update Model";
+}
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading panel-head">Update Model</div>
+    <div class="panel-body">
+@using (Html.BeginForm())
+            {
+
+            @Html.HiddenFor(model => model.VehicleMakeId)
+
+            <div class="form-gorup">
+                @Html.LabelFor(model => model.ModelId, new { @class = "col-lg-3 control-label" })
+                <div class="col-lg-9">
+                    @Html.TextBoxFor(model => model.ModelId, new { @readonly="readonly", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MakeName, new { @class = "col-lg-3 control-label" })
+                <div class="col-lg-9">
+                    @Html.TextBoxFor(model => model.MakeName, new { @readonly="readonly", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-gorup">
+                @Html.LabelFor(model => model.ModelName, new { @class = "col-lg-3 control-label" })
+                <div class="col-lg-9">
+                    @Html.TextBoxFor(model => model.ModelName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-gorup">
+                @Html.LabelFor(model => model.ModelAbbr, new { @class = "col-lg-3 control-label" })
+                <div class="col-lg-9">
+                    @Html.TextBoxFor(model => model.ModelAbbr, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <input type="submit" value="Update" class="btn btn-danger" />
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+                    </div>
+                </div>
+            }
+    </div>
+</div>
