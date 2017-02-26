@@ -62,6 +62,7 @@ namespace VehicleProject.Web.Controllers
         [HttpGet]
         public ActionResult Index(int? page, string filterId, string sortTerm)
         {
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             var vehicleMakeEntities = _vehicleMakeService.GetAll();
 
@@ -102,7 +103,7 @@ namespace VehicleProject.Web.Controllers
             }
 
             //fetching data, returning sorted/filtered/paged result
-            var pagedVehicleModelEntities = _vehicleModelService.GetPagedVehicleModels(pageNumber, filterMakeId, sortTerm);
+            var pagedVehicleModelEntities = _vehicleModelService.GetPagedVehicleModels(pageSize, pageNumber, filterMakeId, sortTerm);
             var tempVehicleModelModels = _mapper.Map<IEnumerable<VehicleModelEntity>, IEnumerable<VehicleModelIndexVM>>(pagedVehicleModelEntities.ToArray());
             var pagedVehicleModelModels = new StaticPagedList<VehicleModelIndexVM>(tempVehicleModelModels, pagedVehicleModelEntities.GetMetaData());
             return View(pagedVehicleModelModels);

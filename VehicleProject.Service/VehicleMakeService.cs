@@ -7,17 +7,15 @@ namespace VehicleProject.Service
 {
     public class VehicleMakeService : IVehicleMakeService
     {
-        private IVehicleModelRepository _vehicleModelRepository;
         private IVehicleMakeRepository _vehicleMakeRepository;
         public VehicleMakeService(IVehicleMakeRepository vehicleMakeRepository, IVehicleModelRepository vehicleModelRepository)
         {
-            _vehicleModelRepository = vehicleModelRepository;
             _vehicleMakeRepository = vehicleMakeRepository;
         }
 
-        public IPagedList<VehicleMakeEntity> GetPagedVehicleMakes(int pageNumber, string sortTerm)
+        public IPagedList<VehicleMakeEntity> GetPagedVehicleMakes(int pageSize, int pageNumber, string sortTerm)
         {
-            return _vehicleMakeRepository.GetPaged(pageNumber, sortTerm);
+            return _vehicleMakeRepository.GetPaged(pageSize, pageNumber, sortTerm);
         }
 
         public IEnumerable<VehicleMakeEntity> GetAll()
@@ -42,14 +40,6 @@ namespace VehicleProject.Service
 
         public void DeleteVehicleMake(VehicleMakeEntity vehicleMakeEntity)
         {
-            //when deleting a make, delete all models that make has as well.
-            /*
-            foreach(var vehicleModel in vehicleMakeEntity.MakeModels)
-            {
-                VehicleModelEntity vehicleModelToDelete = vehicleModel;
-                _vehicleModelRepository.Delete(vehicleModelToDelete);
-            }
-            */
             _vehicleMakeRepository.Delete(vehicleMakeEntity);
         }
         

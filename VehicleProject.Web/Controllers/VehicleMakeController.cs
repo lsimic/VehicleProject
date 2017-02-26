@@ -49,11 +49,11 @@ namespace VehicleProject.Web.Controllers
         [HttpGet]
         public ActionResult Index(int? page, string sortTerm)
         {
-            
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             ViewBag.CurrentSort = sortTerm;
 
-            var pagedVehicleMakeEntities = _vehicleMakeService.GetPagedVehicleMakes(pageNumber, sortTerm);
+            var pagedVehicleMakeEntities = _vehicleMakeService.GetPagedVehicleMakes(pageSize, pageNumber, sortTerm);
             var tempVehicleMakeModels = _mapper.Map<IEnumerable<VehicleMakeEntity>, IEnumerable<VehicleMakeIndexUpdateVM>>(pagedVehicleMakeEntities.ToArray());
             var pagedVehicleMakeModels = new StaticPagedList<VehicleMakeIndexUpdateVM>(tempVehicleMakeModels, pagedVehicleMakeEntities.GetMetaData());
             return View(pagedVehicleMakeModels);

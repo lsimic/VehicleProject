@@ -17,9 +17,9 @@ namespace VehicleProject.Service
 
 
 
-        public IPagedList<VehicleModelEntity> GetPagedVehicleModels(int pageNumber, int? filterId, string sortTerm)
+        public IPagedList<VehicleModelEntity> GetPagedVehicleModels(int pageSize, int pageNumber, int? filterId, string sortTerm)
         {
-            return _vehicleModelRepository.GetPaged(pageNumber, filterId, sortTerm);
+            return _vehicleModelRepository.GetPaged(pageSize, pageNumber, filterId, sortTerm);
         }
 
         public VehicleModelEntity GetVehicleModel(int id)

@@ -31,10 +31,8 @@ namespace VehicleProject.Repository
         }
 
 
-        public IPagedList<VehicleMakeEntity> GetPaged(int pageNumber, string sortTerm)
+        public IPagedList<VehicleMakeEntity> GetPaged(int pageSize, int pageNumber, string sortTerm)
         {
-            //pagesize is constant value, defined here. could be deifned elsewhere and propagated here.
-            int pageSize = 5;
             IQueryable<VehicleMakeEntity> makeEntities = _genereicRepository.GetAll;
 
             //sorting
@@ -55,7 +53,6 @@ namespace VehicleProject.Repository
             }
 
             //returning paged result
-            //querry executes here
             return makeEntities.ToPagedList(pageNumber, pageSize);
         }
 

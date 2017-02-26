@@ -23,10 +23,8 @@ namespace VehicleProject.Repository
             return _genericRepository.GetById(id);
         }
 
-        public IPagedList<VehicleModelEntity> GetPaged(int pageNumber, int? filterId, string sortTerm)
+        public IPagedList<VehicleModelEntity> GetPaged(int pageSize, int pageNumber, int? filterId, string sortTerm)
         {
-            //pagesize is constant value, defined here. could be deifned elsewhere and propagated here.
-            int pageSize = 5;
             IQueryable<VehicleModelEntity> modelEntities;
 
             //filtering by make. if filterId is defined, get only entites where VehicleMakeEntityId equals filterid
@@ -65,7 +63,6 @@ namespace VehicleProject.Repository
             }
 
             //return paged result
-            //querry executes here
             return modelEntities.ToPagedList(pageNumber, pageSize);
         }
 

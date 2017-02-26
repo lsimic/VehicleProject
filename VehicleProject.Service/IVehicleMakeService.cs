@@ -6,7 +6,7 @@ namespace VehicleProject.Service
 {
     public interface IVehicleMakeService
     {
-        IPagedList<VehicleMakeEntity> GetPagedVehicleMakes(int pageNumber, string sortTerm);
+        IPagedList<VehicleMakeEntity> GetPagedVehicleMakes(int pageSize, int pageNumber, string sortTerm);
         IEnumerable<VehicleMakeEntity> GetAll();
         VehicleMakeEntity GetVehicleMake(int id);
         void CreateVehicleMake(VehicleMakeEntity vehicleMakeEntity);
