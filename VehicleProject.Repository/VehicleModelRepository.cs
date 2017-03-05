@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using VehicleProject.DAL;
 using PagedList;
+using System;
 
 namespace VehicleProject.Repository
 {
@@ -23,16 +24,24 @@ namespace VehicleProject.Repository
             return _genericRepository.GetById(id);
         }
 
-        public IPagedList<VehicleModelEntity> GetPaged(int pageSize, int pageNumber, int? filterId, string sortTerm)
+        public IPagedList<VehicleModelEntity> GetPaged(int pageSize, int pageNumber, string filterId, string sortTerm)
         {
             IQueryable<VehicleModelEntity> modelEntities;
 
             //filtering by make. if filterId is defined, get only entites where VehicleMakeEntityId equals filterid
             //else get all entities
-            if (filterId.HasValue && filterId!=0)
+            int filterMakeId = 0;
+            if(!string.IsNullOrEmpty(filterId))
+            {
+                filterMakeId = Int32.Parse(filterId);
+            }
+
+
+
+            if (filterMakeId!=0)
             {
                 modelEntities = _genericRepository.GetAll.Where(
-                vehicleModelEntity => vehicleModelEntity.VehicleMakeId == filterId);
+                vehicleModelEntity => vehicleModelEntity.VehicleMakeId == filterMakeId);
             }
             else
             {
