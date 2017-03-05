@@ -23,13 +23,18 @@ namespace VehicleProject.Web.Controllers
             _mapper = mapper;
         }
 
-        //create model
-        [HttpGet]
-        public ActionResult Create()
+        public SelectList PopulateDropDown()
         {
-            //dropdownlist for make selection, selects Id
             var vehicleMakeEntities = _vehicleMakeService.GetAll();
             var dropDownEntities = new List<SelectListItem>();
+
+            dropDownEntities.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = " ",
+                Selected = true
+            });
+
             foreach (var item in vehicleMakeEntities)
             {
                 dropDownEntities.Add(new SelectListItem
@@ -38,8 +43,17 @@ namespace VehicleProject.Web.Controllers
                     Text = item.MakeName
                 });
             }
-            ViewBag.dropDownListOptions = new SelectList(dropDownEntities, "Value", "Text");
+            return new SelectList(dropDownEntities, "Value", "Text");
+        }
 
+
+
+        //create model
+        [HttpGet]
+        public ActionResult Create()
+        {
+            //dropdownlist for make selection, selects Id
+            ViewBag.dropDownListOptions = PopulateDropDown();
             return View();
         }
 
@@ -74,25 +88,8 @@ namespace VehicleProject.Web.Controllers
             ViewBag.currentFilter = filterId;
 
 
-            //dropdownlist for filtering, currently not used
-            var dropDownEntities = new List<SelectListItem>();
-            dropDownEntities.Add(new SelectListItem
-            {
-                Value = "0",
-                Text = " ",
-                Selected = true
-            });
-
-            foreach (var item in vehicleMakeEntities)
-            {
-                dropDownEntities.Add(new SelectListItem
-                {
-                    Value = item.MakeId.ToString(),
-                    Text = item.MakeName
-                });
-            }
-
-            ViewBag.dropDownListOptions = new SelectList(dropDownEntities, "Value", "Text");
+            //dropdownlist for filtering
+            ViewBag.dropDownListOptions = PopulateDropDown();
 
             //checking and parsing filtering id
             int filterMakeId = 0;
