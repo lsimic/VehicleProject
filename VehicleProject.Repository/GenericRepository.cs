@@ -3,6 +3,8 @@ using VehicleProject.DAL;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Infrastructure;
+using System;
+using System.Data.Entity.Validation;
 
 namespace VehicleProject.Repository
 {
@@ -31,12 +33,26 @@ namespace VehicleProject.Repository
         //Create method implementation
         public void Create(T entity)
         {
-            entities.Add(entity);
-            _context.SaveChanges();           
+            try
+            {
+                entities.Add(entity);
+                _context.SaveChanges();
+            }
+
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        System.Diagnostics.Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
         }
 
         //ReadById Method implementation
-        public T GetById(int id)
+        public T GetById(Guid id)
         {
             return entities.Find(id);
         }

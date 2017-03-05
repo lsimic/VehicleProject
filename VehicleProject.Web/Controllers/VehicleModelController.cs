@@ -58,14 +58,14 @@ namespace VehicleProject.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(VehicleModelCreateVM modelModel)
+        public ActionResult Create(VehicleModelVM modelModel)
         {
             VehicleModelEntity modelEntity = new VehicleModelEntity();
 
-            modelEntity = _mapper.Map<VehicleModelCreateVM, VehicleModelEntity>(modelModel);
+            modelEntity = _mapper.Map<VehicleModelVM, VehicleModelEntity>(modelModel);
             _vehicleModelService.CreateVehicleModel(modelEntity, modelEntity.VehicleMakeId);
 
-            if (modelEntity.ModelId > 0)
+            if (modelEntity.ModelId != Guid.Empty)
             {
                 return RedirectToAction("Index");
             }
@@ -86,60 +86,57 @@ namespace VehicleProject.Web.Controllers
             ViewBag.currentSort = sortTerm;
             ViewBag.currentFilter = filterId;
 
-
             //dropdownlist for filtering
             ViewBag.dropDownListOptions = PopulateDropDown();
 
-            //checking and parsing filtering id
-
             //fetching data, returning sorted/filtered/paged result
             var pagedVehicleModelEntities = _vehicleModelService.GetPagedVehicleModels(pageSize, pageNumber, filterId, sortTerm);
-            var tempVehicleModelModels = _mapper.Map<IEnumerable<VehicleModelEntity>, IEnumerable<VehicleModelIndexVM>>(pagedVehicleModelEntities.ToArray());
-            var pagedVehicleModelModels = new StaticPagedList<VehicleModelIndexVM>(tempVehicleModelModels, pagedVehicleModelEntities.GetMetaData());
+            var tempVehicleModelModels = _mapper.Map<IEnumerable<VehicleModelEntity>, IEnumerable<VehicleModelVM>>(pagedVehicleModelEntities.ToArray());
+            var pagedVehicleModelModels = new StaticPagedList<VehicleModelVM>(tempVehicleModelModels, pagedVehicleModelEntities.GetMetaData());
             return View(pagedVehicleModelModels);
         }
 
         //sngle vehicle model
         [HttpGet]
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             var modelEntity = _vehicleModelService.GetVehicleModel(id);
             var makeEntity = _vehicleMakeService.GetVehicleMake(modelEntity.VehicleMakeId);
             modelEntity.VehicleMake = makeEntity;
-            var modelModel = _mapper.Map<VehicleModelEntity, VehicleModelDetailVM>(modelEntity);
+            var modelModel = _mapper.Map<VehicleModelEntity, VehicleModelVM>(modelEntity);
             return View(modelModel);
         }
 
         //update model
         [HttpGet]
-        public ActionResult Update(int id)
+        public ActionResult Update(Guid id)
         {
             var modelEntity = _vehicleModelService.GetVehicleModel(id);
-            var modelModel = _mapper.Map<VehicleModelEntity, VehicleModelUpdateDeleteVM>(modelEntity);
+            var modelModel = _mapper.Map<VehicleModelEntity, VehicleModelVM>(modelEntity);
             return View(modelModel);
         }
 
         [HttpPost]
-        public ActionResult Update(VehicleModelUpdateDeleteVM modelModel)
+        public ActionResult Update(VehicleModelVM modelModel)
         {
-            var modelEntity = _mapper.Map<VehicleModelUpdateDeleteVM, VehicleModelEntity>(modelModel);
+            var modelEntity = _mapper.Map<VehicleModelVM, VehicleModelEntity>(modelModel);
             _vehicleModelService.UpdateVehicleModel(modelEntity);
             return RedirectToAction("Index");
         }
 
         //delete model
         [HttpGet]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             var modelEntity = _vehicleModelService.GetVehicleModel(id);
-            var modelModel = _mapper.Map<VehicleModelEntity, VehicleModelUpdateDeleteVM>(modelEntity);
+            var modelModel = _mapper.Map<VehicleModelEntity, VehicleModelVM>(modelEntity);
             return View(modelModel);
 
         }
         [HttpPost]
-        public ActionResult Delete(VehicleModelUpdateDeleteVM modelModel)
+        public ActionResult Delete(VehicleModelVM modelModel)
         {
-            var modelEntity = _mapper.Map<VehicleModelUpdateDeleteVM, VehicleModelEntity>(modelModel);
+            var modelEntity = _mapper.Map<VehicleModelVM, VehicleModelEntity>(modelModel);
             _vehicleModelService.DeleteVehicleModel(modelEntity);
             return RedirectToAction("Index");
         }

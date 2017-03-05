@@ -19,7 +19,7 @@ namespace VehicleProject.Repository
             _genericRepository.Create(entity);
         }
 
-        public VehicleModelEntity GetById(int id)
+        public VehicleModelEntity GetById(Guid id)
         {
             return _genericRepository.GetById(id);
         }
@@ -30,15 +30,13 @@ namespace VehicleProject.Repository
 
             //filtering by make. if filterId is defined, get only entites where VehicleMakeEntityId equals filterid
             //else get all entities
-            int filterMakeId = 0;
+            Guid filterMakeId = Guid.Empty;
             if(!string.IsNullOrEmpty(filterId))
             {
-                filterMakeId = Int32.Parse(filterId);
+                filterMakeId = Guid.Parse(filterId);
             }
 
-
-
-            if (filterMakeId!=0)
+            if (!filterMakeId.Equals(Guid.Empty))
             {
                 modelEntities = _genericRepository.GetAll.Where(
                 vehicleModelEntity => vehicleModelEntity.VehicleMakeId == filterMakeId);
@@ -63,9 +61,12 @@ namespace VehicleProject.Repository
                 case "ByMakeNameDescending":
                     modelEntities = modelEntities.OrderByDescending(vehicleModelEntity => vehicleModelEntity.VehicleMake.MakeName);
                     break;
+                //filtering by Id is obsolete when using guid
+                /*
                 case "ByIdDescending":
                     modelEntities = modelEntities.OrderByDescending(vehicleModelEntity => vehicleModelEntity.ModelId);
                     break;
+                */
                 default:
                     modelEntities = modelEntities.OrderBy(vehicleModelEntity => vehicleModelEntity.ModelId);
                     break;

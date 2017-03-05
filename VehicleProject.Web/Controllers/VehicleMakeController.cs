@@ -31,12 +31,11 @@ namespace VehicleProject.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(VehicleMakeCreateVM makeModel)
+        public ActionResult Create(VehicleMakeVM makeModel)
         {
-            var makeEntity = _mapper.Map<VehicleMakeCreateVM, VehicleMakeEntity>(makeModel);
+            var makeEntity = _mapper.Map<VehicleMakeVM, VehicleMakeEntity>(makeModel);
             _vehicleMakeService.CreateVehicleMake(makeEntity);
-
-            if(makeEntity.MakeId>0)
+            if(makeEntity.MakeId != Guid.Empty)
             {
                 return RedirectToAction("Index");
             }
@@ -54,50 +53,50 @@ namespace VehicleProject.Web.Controllers
             ViewBag.CurrentSort = sortTerm;
 
             var pagedVehicleMakeEntities = _vehicleMakeService.GetPagedVehicleMakes(pageSize, pageNumber, sortTerm);
-            var tempVehicleMakeModels = _mapper.Map<IEnumerable<VehicleMakeEntity>, IEnumerable<VehicleMakeIndexUpdateVM>>(pagedVehicleMakeEntities.ToArray());
-            var pagedVehicleMakeModels = new StaticPagedList<VehicleMakeIndexUpdateVM>(tempVehicleMakeModels, pagedVehicleMakeEntities.GetMetaData());
+            var tempVehicleMakeModels = _mapper.Map<IEnumerable<VehicleMakeEntity>, IEnumerable<VehicleMakeVM>>(pagedVehicleMakeEntities.ToArray());
+            var pagedVehicleMakeModels = new StaticPagedList<VehicleMakeVM>(tempVehicleMakeModels, pagedVehicleMakeEntities.GetMetaData());
             return View(pagedVehicleMakeModels);
         }
 
         //sngle vehicle make
         [HttpGet]
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             var makeEntity = _vehicleMakeService.GetVehicleMake(id);
-            var makeModel = _mapper.Map<VehicleMakeEntity, VehicleMakeDeleteDetailVM>(makeEntity);
+            var makeModel = _mapper.Map<VehicleMakeEntity, VehicleMakeVM>(makeEntity);
             return View(makeModel);
         }
 
         //update make
         [HttpGet]
-        public ActionResult Update(int id)
+        public ActionResult Update(Guid id)
         {
             var makeEntity = _vehicleMakeService.GetVehicleMake(id);
-            var makeModel = _mapper.Map<VehicleMakeEntity, VehicleMakeIndexUpdateVM>(makeEntity);
+            var makeModel = _mapper.Map<VehicleMakeEntity, VehicleMakeVM>(makeEntity);
             return View(makeModel);
         }
 
         [HttpPost]
-        public ActionResult Update(VehicleMakeIndexUpdateVM makeModel)
+        public ActionResult Update(VehicleMakeVM makeModel)
         {
-            var makeEntity = _mapper.Map<VehicleMakeIndexUpdateVM, VehicleMakeEntity>(makeModel);
+            var makeEntity = _mapper.Map<VehicleMakeVM, VehicleMakeEntity>(makeModel);
             _vehicleMakeService.UpdateVehicleMake(makeEntity);
             return RedirectToAction("Index");
         }
 
         //delete make
         [HttpGet]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             var makeEntity = _vehicleMakeService.GetVehicleMake(id);
-            var makeModel = _mapper.Map<VehicleMakeEntity, VehicleMakeDeleteDetailVM>(makeEntity);
+            var makeModel = _mapper.Map<VehicleMakeEntity, VehicleMakeVM>(makeEntity);
             return View(makeModel);
 
         }
         [HttpPost]
-        public ActionResult Delete(VehicleMakeDeleteDetailVM makeModel)
+        public ActionResult Delete(VehicleMakeVM makeModel)
         {
-            var makeEntity = _mapper.Map<VehicleMakeDeleteDetailVM, VehicleMakeEntity>(makeModel);
+            var makeEntity = _mapper.Map<VehicleMakeVM, VehicleMakeEntity>(makeModel);
             _vehicleMakeService.DeleteVehicleMake(makeEntity);
             return RedirectToAction("Index");
         }

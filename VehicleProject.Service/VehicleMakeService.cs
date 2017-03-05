@@ -2,6 +2,7 @@
 using PagedList;
 using VehicleProject.DAL;
 using System.Collections.Generic;
+using System;
 
 namespace VehicleProject.Service
 {
@@ -23,7 +24,7 @@ namespace VehicleProject.Service
             return _vehicleMakeRepository.GetAll();
         }
 
-        public VehicleMakeEntity GetVehicleMake(int id)
+        public VehicleMakeEntity GetVehicleMake(Guid id)
         {
             return _vehicleMakeRepository.GetById(id);
         }

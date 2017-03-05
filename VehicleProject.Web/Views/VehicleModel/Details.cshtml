@@ -1,4 +1,4 @@
-﻿@model VehicleProject.Web.Models.VehicleModelDetailVM
+﻿@model VehicleProject.Web.Models.VehicleModelVM
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,30 +13,30 @@
             {
         
             <div class="form-gorup">
-                @Html.LabelFor(model => model.ModelId, new { @class = "col-lg-3 control-label" })
+                @Html.LabelFor(model => model.Id, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-9">
-                    @Html.TextBoxFor(model => model.ModelId, new { @readonly = "readonly", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Id, new { @readonly = "readonly", @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.VehicleMake.MakeName, new { @class = "col-lg-3 control-label" })
+                @Html.LabelFor(model => model.Make.Name, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-9">
-                    @Html.TextBoxFor(model => model.VehicleMake.MakeName, new { @readonly = "readonly", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Make.Name, new { @readonly = "readonly", @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-gorup">
-                @Html.LabelFor(model => model.ModelName, new { @class = "col-lg-3 control-label" })
+                @Html.LabelFor(model => model.Name, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-9">
-                    @Html.TextBoxFor(model => model.ModelName, new { @readonly = "readonly", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "form-control" })
                 </div>
             </div>
 
             <div class="form-gorup">
-                @Html.LabelFor(model => model.ModelAbbr, new { @class = "col-lg-3 control-label" })
+                @Html.LabelFor(model => model.Abbr, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-9">
-                    @Html.TextBoxFor(model => model.ModelAbbr, new { @readonly = "readonly", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Abbr, new { @readonly = "readonly", @class = "form-control" })
                 </div>
             </div>
 

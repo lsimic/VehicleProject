@@ -1,4 +1,4 @@
-﻿@model VehicleProject.Web.Models.VehicleMakeIndexUpdateVM
+﻿@model VehicleProject.Web.Models.VehicleMakeVM
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,22 +11,22 @@
         @using (Html.BeginForm())
         {
                 <div class="form-gorup">
-                    @Html.LabelFor(model => model.MakeId, new { @class = "col-lg-3 control-label" })
+                    @Html.LabelFor(model => model.Id, new { @class = "col-lg-3 control-label" })
                     <div class="col-lg-9">
-                        @Html.TextBoxFor(model => model.MakeId, new { @class = "form-control", @readonly="readonly" })
+                        @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @readonly="readonly" })
                     </div>
                 </div>
 
                 <div class="form-gorup">
-                    @Html.LabelFor(model => model.MakeName, new { @class = "col-lg-3 control-label" })
+                    @Html.LabelFor(model => model.Name, new { @class = "col-lg-3 control-label" })
                     <div class="col-lg-9">
-                        @Html.TextBoxFor(model => model.MakeName, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-gorup">
-                    @Html.LabelFor(model => model.MakeAbbr, new { @class = "col-sm-3 control-label" })
+                    @Html.LabelFor(model => model.Abbr, new { @class = "col-sm-3 control-label" })
                     <div class="col-lg-9">
-                        @Html.TextBoxFor(model => model.MakeAbbr, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.Abbr, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">

@@ -2,6 +2,7 @@
 using VehicleProject.DAL;
 using PagedList;
 using System.Collections.Generic;
+using System;
 
 namespace VehicleProject.Repository
 {
@@ -20,7 +21,7 @@ namespace VehicleProject.Repository
             _genereicRepository.Create(entity);
         }
 
-        public VehicleMakeEntity GetById(int id)
+        public VehicleMakeEntity GetById(Guid id)
         {
             return _genereicRepository.GetById(id);
         }
@@ -44,9 +45,12 @@ namespace VehicleProject.Repository
                 case "ByNameDescending":
                     makeEntities = makeEntities.OrderByDescending(vehicleMake => vehicleMake.MakeName);
                     break;
+                //sort by id is obsolete when using guid
+                /*
                 case "ByIdDescending":
                     makeEntities = makeEntities.OrderByDescending(vehicleMake => vehicleMake.MakeId);
                     break;
+                */
                 default:
                     makeEntities = makeEntities.OrderBy(vehicleMake => vehicleMake.MakeId);
                     break;

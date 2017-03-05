@@ -20,62 +20,37 @@ namespace VehicleProject.Web.App_Start
         {
             Mapper.Initialize(config =>
             {
-                //mapping VehicleMakeDeleteDetailVM
-                config.CreateMap<MakeModel, VehicleModelEntity>()
-                .ForMember(dest => dest.VehicleMake, opt => opt.Ignore());
+                config.CreateMap<VehicleModelEntity, VehicleModelVM>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ModelId))
+                .ForMember(dest => dest.MakeId, opt => opt.MapFrom(src => src.VehicleMakeId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ModelName))
+                .ForMember(dest => dest.Abbr, opt => opt.MapFrom(src => src.ModelAbbr))
+                .ForMember(dest => dest.Make, opt => opt.MapFrom(src => src.VehicleMake))
+                .MaxDepth(3);
 
-                config.CreateMap<VehicleModelEntity, MakeModel>()
-                .ForSourceMember(src => src.VehicleMake, opt => opt.Ignore());
+                config.CreateMap<VehicleMakeEntity, VehicleMakeVM>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.MakeId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.MakeName))
+                .ForMember(dest => dest.Abbr, opt => opt.MapFrom(src => src.MakeAbbr))
+                .ForMember(dest => dest.MakeModels, opt => opt.MapFrom(src => src.MakeModels))
+                .MaxDepth(3);
 
-                config.CreateMap<VehicleMakeDeleteDetailVM, VehicleMakeEntity>();
-                config.CreateMap<VehicleMakeEntity, VehicleMakeDeleteDetailVM>();
-                //mapping VehicleMakeDeleteDetailVM finished
+                config.CreateMap<VehicleModelVM, VehicleModelEntity>()
+                .ForMember(dest => dest.ModelId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.VehicleMakeId, opt => opt.MapFrom(src => src.MakeId))
+                .ForMember(dest => dest.ModelName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.ModelAbbr, opt => opt.MapFrom(src => src.Abbr))
+                .ForMember(dest => dest.VehicleMake, opt => opt.MapFrom(src => src.Make))
+                .MaxDepth(3);
 
-                //mapping VehicleMakeCreateVM
-                config.CreateMap<VehicleMakeCreateVM, VehicleMakeEntity>()
-                .ForMember(dest => dest.MakeId, opt => opt.Ignore())
-                .ForMember(dest => dest.MakeModels, opt => opt.Ignore());
-                //mapping VehicleMakeCreateVM finished
-
-                //mapping VehicleMakeIndexUpdateVM
-                config.CreateMap<VehicleMakeIndexUpdateVM, VehicleMakeEntity>()
-                .ForMember(dest => dest.MakeModels, opt => opt.Ignore());
-
-                config.CreateMap<VehicleMakeEntity, VehicleMakeIndexUpdateVM>()
-                .ForSourceMember(src => src.MakeModels, opt => opt.Ignore());
-                //mapping VehicleMakeIndexUpdateVM finished
+                config.CreateMap<VehicleMakeVM, VehicleMakeEntity>()
+                .ForMember(dest => dest.MakeId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.MakeName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.MakeAbbr, opt => opt.MapFrom(src => src.Abbr))
+                .ForMember(dest => dest.MakeModels, opt => opt.MapFrom(src => src.MakeModels))
+                .MaxDepth(3);
 
 
-
-                //mapping VehicleModelCreateVM
-                config.CreateMap<VehicleModelCreateVM, VehicleModelEntity>()
-                .ForMember(dest => dest.VehicleMakeId, opt => opt.MapFrom(src => Int32.Parse(src.MakeId)))
-                .ForMember(dest => dest.ModelId, opt => opt.Ignore())
-                .ForMember(dest => dest.VehicleMake, opt => opt.Ignore());
-                //mapping VehicleModelCreateVM finished
-
-                //mapping VehicleModelDetailVM
-                config.CreateMap<VehicleMakeEntity, ModelMake>()
-                .ForSourceMember(src => src.MakeModels, opt => opt.Ignore());
-
-                config.CreateMap<VehicleModelEntity, VehicleModelDetailVM>();
-                //mapping VehicleModelDetailVM finished
-
-                //mapping VehicleModelIndexVm 
-                config.CreateMap<VehicleModelEntity, VehicleModelIndexVM>()
-                .ForSourceMember(src => src.VehicleMakeId, opt => opt.Ignore())
-                .ForSourceMember(src => src.VehicleMake, opt => opt.Ignore())
-                .ForMember(dest => dest.MakeName, opt => opt.MapFrom(src => src.VehicleMake.MakeName));
-                //mapping VehicleModelIndexVm finished
-
-                //mapping VehicleModelUpdateDeleteVM
-                config.CreateMap<VehicleModelEntity, VehicleModelUpdateDeleteVM>()
-                .ForSourceMember(src => src.VehicleMake, opt => opt.Ignore())
-                .ForMember(dest => dest.MakeName, opt => opt.MapFrom(src => src.VehicleMake.MakeName));
-
-                config.CreateMap<VehicleModelUpdateDeleteVM, VehicleModelEntity>()
-                .ForMember(dest => dest.VehicleMake, opt => opt.Ignore())
-                .ForSourceMember(src => src.MakeName, opt => opt.Ignore());
             });
 
             return Mapper.Instance;

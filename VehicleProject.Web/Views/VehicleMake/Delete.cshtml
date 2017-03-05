@@ -1,4 +1,4 @@
-﻿@model VehicleProject.Web.Models.VehicleMakeDeleteDetailVM
+﻿@model VehicleProject.Web.Models.VehicleMakeVM
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,23 +15,17 @@
         @using (Html.BeginForm())
         {
             <div>
+                @Html.HiddenFor(model => model.Id)
                 <div class="form-gorup">
-                    @Html.LabelFor(model => model.MakeId, new { @class = "col-lg-3 control-label" })
-
+                    @Html.LabelFor(model => model.Name, new { @class = "col-lg-3 control-label" })
                     <div class="col-lg-9">
-                        @Html.TextBoxFor(model => model.MakeId, new { @readonly = "readonly", @class = "form-control" })
+                        @Html.TextBoxFor(model => model.Name, new { @readonly = "readonly", @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-gorup">
-                    @Html.LabelFor(model => model.MakeName, new { @class = "col-lg-3 control-label" })
+                    @Html.LabelFor(model => model.Abbr, new { @class = "col-lg-3 control-label" })
                     <div class="col-lg-9">
-                        @Html.TextBoxFor(model => model.MakeName, new { @readonly = "readonly", @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-gorup">
-                    @Html.LabelFor(model => model.MakeAbbr, new { @class = "col-lg-3 control-label" })
-                    <div class="col-lg-9">
-                        @Html.TextBoxFor(model => model.MakeAbbr, new { @readonly = "readonly", @class = "form-control" })
+                        @Html.TextBoxFor(model => model.Abbr, new { @readonly = "readonly", @class = "form-control" })
                     </div>
                 </div>
             </div>
@@ -47,9 +41,7 @@
             <div class="form-group">
                 <table class="table">
                     <tr>                        
-                        <td>
-                            Model Id
-                        </td>
+
                         <td>
                             Model name
                         </td>
@@ -61,14 +53,13 @@
                     {
                         <tr>
                             <td>
-                                @Html.HiddenFor(ModelItem => item.VehicleMakeId)
-                                @Html.DisplayFor(ModelItem => item.ModelId)
+                                @Html.HiddenFor(ModelItem => item.MakeId)
+                                @Html.HiddenFor(ModelItem => item.Id)
+                                @Html.HiddenFor(ModelItem => item.Make)
+                                @Html.DisplayFor(ModelItem => item.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(ModelItem => item.ModelName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(ModelItem => item.ModelAbbr)
+                                @Html.DisplayFor(ModelItem => item.Abbr)
                             </td>
                         </tr>
                     }

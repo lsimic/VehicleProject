@@ -1,6 +1,6 @@
 ﻿@using PagedList
 @using PagedList.Mvc
-@model PagedList.IPagedList<VehicleProject.Web.Models.VehicleModelIndexVM>
+@model PagedList.IPagedList<VehicleProject.Web.Models.VehicleModelVM>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Vehicle Model Index";
@@ -37,9 +37,7 @@
         <table class="table">
             <tr>
                 <th>                    
-                    ID
-                    @Html.ActionLink(" ", "Index", new { sortTerm = "default", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-down" })
-                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByIdDescending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-up" })
+                    Model ID
                 </th>
                 <th>
                     Make Name
@@ -62,21 +60,21 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(ModelItem => item.ModelId)
+                        @Html.DisplayFor(ModelItem => item.Id)
                     </td>
                     <td>
-                        @Html.DisplayFor(ModelItem => item.MakeName)
+                        @Html.DisplayFor(ModelItem => item.Make.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(ModelItem => item.ModelName)
+                        @Html.DisplayFor(ModelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(ModelItem => item.ModelAbbr)
+                        @Html.DisplayFor(ModelItem => item.Abbr)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Update", new { id = item.ModelId }, new { @class = "btn btn-success" }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ModelId }, new { @class = "btn btn-danger" }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ModelId }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Edit", "Update", new { id = item.Id }, new { @class = "btn btn-success" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
                     </td>
                 </tr>
             }

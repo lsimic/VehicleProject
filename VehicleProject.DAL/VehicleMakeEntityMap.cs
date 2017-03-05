@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 
 namespace VehicleProject.DAL
 {
@@ -8,6 +9,7 @@ namespace VehicleProject.DAL
         {
             //key
             HasKey(t => t.MakeId);
+            Property(t => t.MakeId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             //properties
             Property(t => t.MakeName).IsRequired();

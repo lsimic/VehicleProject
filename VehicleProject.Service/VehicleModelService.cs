@@ -1,6 +1,7 @@
 ﻿using VehicleProject.DAL;
 using PagedList;
 using VehicleProject.Repository;
+using System;
 
 namespace VehicleProject.Service
 {
@@ -22,13 +23,13 @@ namespace VehicleProject.Service
             return _vehicleModelRepository.GetPaged(pageSize, pageNumber, filterId, sortTerm);
         }
 
-        public VehicleModelEntity GetVehicleModel(int id)
+        public VehicleModelEntity GetVehicleModel(Guid id)
         {
             return _vehicleModelRepository.GetById(id);
         }
 
 
-        public void CreateVehicleModel(VehicleModelEntity vehicleModelEntity, int makeId)
+        public void CreateVehicleModel(VehicleModelEntity vehicleModelEntity, Guid makeId)
         {
             VehicleMakeEntity vehicleMakeEntity = _vehicleMakeRepository.GetById(makeId);
 

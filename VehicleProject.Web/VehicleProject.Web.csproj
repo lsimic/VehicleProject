@@ -164,13 +164,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\VehicleMakeCreateVM.cs" />
-    <Compile Include="Models\VehicleMakeDeleteDetailVM.cs" />
-    <Compile Include="Models\VehicleMakeIndexUpdateVM.cs" />
-    <Compile Include="Models\VehicleModelCreateVM.cs" />
-    <Compile Include="Models\VehicleModelDetailVM.cs" />
-    <Compile Include="Models\VehicleModelIndexVM.cs" />
-    <Compile Include="Models\VehicleModelUpdateDeleteVM.cs" />
+    <Compile Include="Models\BaseVM.cs" />
+    <Compile Include="Models\VehicleMakeVM.cs" />
+    <Compile Include="Models\VehicleModelVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
