@@ -6,7 +6,7 @@ namespace VehicleProject.Service
 {
     public interface IVehicleModelService
     {
-        IPagedList<VehicleModelEntity> GetPagedVehicleModels(int pageSize, int pageNumber, string filterId, string sortTerm);
+        IPagedList<VehicleModelEntity> GetPagedVehicleModels(int pageSize, int pageNumber, string filterId, string sortTerm, string searchTerm);
         VehicleModelEntity GetVehicleModel(Guid id);
         void CreateVehicleModel(VehicleModelEntity vehicleModelEntity, Guid MakeId);
         void UpdateVehicleModel(VehicleModelEntity vehicleModelEntity);

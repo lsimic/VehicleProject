@@ -16,22 +16,43 @@
         </a>
 
         <hr/>
+        <div>
+            @using (Html.BeginForm("Index", "VehicleModel", FormMethod.Get))
+            {
+                @Html.Hidden("sortTerm", (string)ViewBag.currentSort);
+                @Html.Hidden("filterId", (string)ViewBag.currentFilter);
+                <div class="form-group">
+                    <div class="col-lg-2">
+                    Search: 
+                    </div>
+                    <div class="col-lg-3">
+                    @Html.TextBox("searchTerm", ViewBag.currentSearch as string, new { @class = "form-control"})
+                    </div>
+                    <div class="col-lg-7">
+                        <input type="submit" value="Search" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </div>
+        <hr />
 
         <div>
-            @{
-                var routeValues = new RouteValueDictionary();
-                routeValues.Add("sortTerm", ViewBag.currentSort);
+            @using (Html.BeginForm("Index", "VehicleModel", FormMethod.Get))
+            {
+                @Html.Hidden("sortTerm", (string)ViewBag.currentSort);
+                @Html.Hidden("searchTerm", (string)ViewBag.currentSearch);
+                <div class="form-group">
+                    <div class="col-lg-2">
+                      Filter By Make:
+                    </div>
+                    <div class="col-lg-3">
+                    @Html.DropDownList("filterId", ViewBag.dropDownListOptions as SelectList, new { @class = "form-control" })              
+                    </div>
+                    <div class="col-lg-7">
+                        <input type="submit" value="Apply Filter" class="btn btn-default" />
+                    </div>
+                </div>
             }
-
-            @using (Html.BeginForm("Index", "VehicleModel", routeValues, FormMethod.Get)) {
-            <fieldset>
-                Filter:
-                @Html.DropDownList("filterId", ViewBag.dropDownListOptions as SelectList, new { @class = "btn btn-default dropdown-toggle" })
-               
-                <input type="submit" value="Apply Filter" class="btn btn-default" />
-            </fieldset>
-            }
-            <!-- note to self: routeValues not working here-->
         </div>
         
         <table class="table">
@@ -41,13 +62,13 @@
                 </th>
                 <th>
                     Make Name
-                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByMakeNameAscending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-down" })
-                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByMakeNameDescending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-up" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByMakeNameAscending", filterId = ViewBag.currentFilter, searchTerm = ViewBag.currentSearch }, new { @class = "glyphicon glyphicon-arrow-down" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByMakeNameDescending", filterId = ViewBag.currentFilter, searchTerm = ViewBag.currentSearch }, new { @class = "glyphicon glyphicon-arrow-up" })
                 </th>
                 <th>
                     Model Name
-                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameAscending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-down" })
-                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameDescending", filterId = ViewBag.currentFilter }, new { @class = "glyphicon glyphicon-arrow-up" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameAscending", filterId = ViewBag.currentFilter, searchTerm = ViewBag.currentSearch }, new { @class = "glyphicon glyphicon-arrow-down" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameDescending", filterId = ViewBag.currentFilter, searchterm = ViewBag.currentSearch }, new { @class = "glyphicon glyphicon-arrow-up" })
                 </th>
                 <th>
                     Model Abbreviation
@@ -87,4 +108,4 @@
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
-new { page, filterId = ViewBag.currentFilter, sortTerm = ViewBag.currentSort}))
+new { page, filterId = ViewBag.currentFilter, sortTerm = ViewBag.currentSort, searchTerm = ViewBag.currentSearch}))

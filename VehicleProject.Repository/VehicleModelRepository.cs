@@ -24,29 +24,42 @@ namespace VehicleProject.Repository
             return _genericRepository.GetById(id);
         }
 
-        public IPagedList<VehicleModelEntity> GetPaged(int pageSize, int pageNumber, string filterId, string sortTerm)
+        public IPagedList<VehicleModelEntity> GetPaged(int pageSize, int pageNumber, string filterId, string sortTerm, string searchTerm)
         {
             IQueryable<VehicleModelEntity> modelEntities;
 
-            //filtering by make. if filterId is defined, get only entites where VehicleMakeEntityId equals filterid
-            //else get all entities
+
+            //filtering:
             Guid filterMakeId = Guid.Empty;
             if(!string.IsNullOrEmpty(filterId))
             {
                 filterMakeId = Guid.Parse(filterId);
             }
-
-            if (!filterMakeId.Equals(Guid.Empty))
+            
+            if ((!filterMakeId.Equals(Guid.Empty))&&(string.IsNullOrEmpty(searchTerm)))
             {
                 modelEntities = _genericRepository.GetAll.Where(
                 vehicleModelEntity => vehicleModelEntity.VehicleMakeId == filterMakeId);
+            }
+            else if ((filterMakeId.Equals(Guid.Empty)) && (!string.IsNullOrEmpty(searchTerm)))
+            {
+                modelEntities = _genericRepository.GetAll.Where(
+                vehicleModelEntity => vehicleModelEntity.ModelName.Contains(searchTerm) ||
+                vehicleModelEntity.VehicleMake.MakeName.Contains(searchTerm));
+            }
+            else if ((!filterMakeId.Equals(Guid.Empty)) && (!string.IsNullOrEmpty(searchTerm)))
+            {
+                modelEntities = _genericRepository.GetAll.Where(
+                vehicleModelEntity => vehicleModelEntity.VehicleMakeId == filterMakeId &&(
+                vehicleModelEntity.ModelName.Contains(searchTerm) ||
+                vehicleModelEntity.VehicleMake.MakeName.Contains(searchTerm)));
             }
             else
             {
                 modelEntities = _genericRepository.GetAll;
             }
 
-            //sorting
+            //sorting:
             switch (sortTerm)
             {
                 case "ByNameAscending":
@@ -61,12 +74,6 @@ namespace VehicleProject.Repository
                 case "ByMakeNameDescending":
                     modelEntities = modelEntities.OrderByDescending(vehicleModelEntity => vehicleModelEntity.VehicleMake.MakeName);
                     break;
-                //filtering by Id is obsolete when using guid
-                /*
-                case "ByIdDescending":
-                    modelEntities = modelEntities.OrderByDescending(vehicleModelEntity => vehicleModelEntity.ModelId);
-                    break;
-                */
                 default:
                     modelEntities = modelEntities.OrderBy(vehicleModelEntity => vehicleModelEntity.ModelId);
                     break;

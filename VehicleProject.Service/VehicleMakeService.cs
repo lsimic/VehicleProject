@@ -14,9 +14,9 @@ namespace VehicleProject.Service
             _vehicleMakeRepository = vehicleMakeRepository;
         }
 
-        public IPagedList<VehicleMakeEntity> GetPagedVehicleMakes(int pageSize, int pageNumber, string sortTerm)
+        public IPagedList<VehicleMakeEntity> GetPagedVehicleMakes(int pageSize, int pageNumber, string sortTerm, string searchTerm)
         {
-            return _vehicleMakeRepository.GetPaged(pageSize, pageNumber, sortTerm);
+            return _vehicleMakeRepository.GetPaged(pageSize, pageNumber, sortTerm, searchTerm);
         }
 
         public IEnumerable<VehicleMakeEntity> GetAll()

@@ -46,13 +46,14 @@ namespace VehicleProject.Web.Controllers
 
         //Vehicle make list
         [HttpGet]
-        public ActionResult Index(int? page, string sortTerm)
+        public ActionResult Index(int? page, string sortTerm, string searchTerm)
         {
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-            ViewBag.CurrentSort = sortTerm;
+            ViewBag.currentSort = sortTerm;
+            ViewBag.currentSearch = searchTerm;
 
-            var pagedVehicleMakeEntities = _vehicleMakeService.GetPagedVehicleMakes(pageSize, pageNumber, sortTerm);
+            var pagedVehicleMakeEntities = _vehicleMakeService.GetPagedVehicleMakes(pageSize, pageNumber, sortTerm, searchTerm);
             var tempVehicleMakeModels = _mapper.Map<IEnumerable<VehicleMakeEntity>, IEnumerable<VehicleMakeVM>>(pagedVehicleMakeEntities.ToArray());
             var pagedVehicleMakeModels = new StaticPagedList<VehicleMakeVM>(tempVehicleMakeModels, pagedVehicleMakeEntities.GetMetaData());
             return View(pagedVehicleMakeModels);

@@ -9,34 +9,45 @@ namespace VehicleProject.Repository
     public class VehicleMakeRepository : IVehicleMakeRepository
     {
 
-        private readonly IGenericRepository<VehicleMakeEntity> _genereicRepository;
+        private readonly IGenericRepository<VehicleMakeEntity> _genericRepository;
         public VehicleMakeRepository(IGenericRepository<VehicleMakeEntity> genericRepository)
         {
-            _genereicRepository = genericRepository;
+            _genericRepository = genericRepository;
         }
 
         //method implementation
         public void Create(VehicleMakeEntity entity)
         {
-            _genereicRepository.Create(entity);
+            _genericRepository.Create(entity);
         }
 
         public VehicleMakeEntity GetById(Guid id)
         {
-            return _genereicRepository.GetById(id);
+            return _genericRepository.GetById(id);
         }
 
         public IEnumerable<VehicleMakeEntity> GetAll()
         {
-            return _genereicRepository.GetAll;
+            return _genericRepository.GetAll;
         }
 
 
-        public IPagedList<VehicleMakeEntity> GetPaged(int pageSize, int pageNumber, string sortTerm)
+        public IPagedList<VehicleMakeEntity> GetPaged(int pageSize, int pageNumber, string sortTerm, string searchTerm)
         {
-            IQueryable<VehicleMakeEntity> makeEntities = _genereicRepository.GetAll;
+            IQueryable<VehicleMakeEntity> makeEntities;
 
-            //sorting
+            //flitering:
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                makeEntities = _genericRepository.GetAll.Where(
+                vehicleMakeEntity => vehicleMakeEntity.MakeName.Contains(searchTerm));
+            }
+            else
+            {
+                makeEntities = _genericRepository.GetAll;
+            }
+
+            //sorting:
             switch (sortTerm)
             {
                 case "ByNameAscending":
@@ -45,12 +56,6 @@ namespace VehicleProject.Repository
                 case "ByNameDescending":
                     makeEntities = makeEntities.OrderByDescending(vehicleMake => vehicleMake.MakeName);
                     break;
-                //sort by id is obsolete when using guid
-                /*
-                case "ByIdDescending":
-                    makeEntities = makeEntities.OrderByDescending(vehicleMake => vehicleMake.MakeId);
-                    break;
-                */
                 default:
                     makeEntities = makeEntities.OrderBy(vehicleMake => vehicleMake.MakeId);
                     break;
@@ -62,16 +67,16 @@ namespace VehicleProject.Repository
 
         public void Update(VehicleMakeEntity entity)
         {
-            var entityToUpdate = _genereicRepository.GetById(entity.MakeId);
+            var entityToUpdate = _genericRepository.GetById(entity.MakeId);
             entityToUpdate.MakeName = entity.MakeName;
             entityToUpdate.MakeAbbr = entity.MakeAbbr;
-            _genereicRepository.Update(entityToUpdate);
+            _genericRepository.Update(entityToUpdate);
         }
 
         public void Delete(VehicleMakeEntity entity)
         {
-            var entityToDelete = _genereicRepository.GetById(entity.MakeId);
-            _genereicRepository.Delete(entityToDelete);
+            var entityToDelete = _genericRepository.GetById(entity.MakeId);
+            _genericRepository.Delete(entityToDelete);
         }
     }
 }

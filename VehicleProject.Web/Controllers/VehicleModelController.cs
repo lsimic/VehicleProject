@@ -30,7 +30,7 @@ namespace VehicleProject.Web.Controllers
 
             dropDownEntities.Add(new SelectListItem
             {
-                Value = "0",
+                Value = "",
                 Text = " ",
                 Selected = true
             });
@@ -74,23 +74,20 @@ namespace VehicleProject.Web.Controllers
 
         //vehicle Model list
         [HttpGet]
-        public ActionResult Index(int? page, string filterId, string sortTerm)
+        public ActionResult Index(int? page, string filterId, string sortTerm, string searchTerm)
         {
             int pageSize = 5;
             int pageNumber = (page ?? 1);
 
-            //storing current sorting and current filtering values here
-            //if sorting is applied, we want filtering to be preserved
-            //if filtering is applied we want sorting to be preserved(does not work)
-            //if another page is selected both filtering and sorting have to be preserved
             ViewBag.currentSort = sortTerm;
             ViewBag.currentFilter = filterId;
+            ViewBag.currentSearch = searchTerm;
 
             //dropdownlist for filtering
             ViewBag.dropDownListOptions = PopulateDropDown();
 
             //fetching data, returning sorted/filtered/paged result
-            var pagedVehicleModelEntities = _vehicleModelService.GetPagedVehicleModels(pageSize, pageNumber, filterId, sortTerm);
+            var pagedVehicleModelEntities = _vehicleModelService.GetPagedVehicleModels(pageSize, pageNumber, filterId, sortTerm, searchTerm);
             var tempVehicleModelModels = _mapper.Map<IEnumerable<VehicleModelEntity>, IEnumerable<VehicleModelVM>>(pagedVehicleModelEntities.ToArray());
             var pagedVehicleModelModels = new StaticPagedList<VehicleModelVM>(tempVehicleModelModels, pagedVehicleModelEntities.GetMetaData());
             return View(pagedVehicleModelModels);

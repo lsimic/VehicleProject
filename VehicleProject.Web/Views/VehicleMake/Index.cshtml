@@ -13,7 +13,25 @@
         <a href="@Url.Action("Create")" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>Vehicle Make
         </a>
+        <hr />
 
+        <div>
+            @using (Html.BeginForm("Index", "VehicleMake", new { sortTerm = ViewBag.currentSort }, FormMethod.Get))
+            {
+                @Html.Hidden("sortTerm", (string)ViewBag.currentSort);
+                <div class="form-group">
+                    <div class="col-lg-2">
+                    Search: 
+                    </div>
+                    <div class="col-lg-3">
+                    @Html.TextBox("searchTerm", ViewBag.currentSearch as string, new { @class = "form-control" })
+                    </div>
+                    <div class="col-lg-7">
+                    <input type="submit" value="Search" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </div>
 
         <table class="table">
             <tr>
@@ -22,8 +40,8 @@
                 </th>
                 <th>
                     Make Name
-                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameAscending" }, new { @class = "glyphicon glyphicon-arrow-down" })
-                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameDescending" }, new { @class = "glyphicon glyphicon-arrow-up" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameAscending", searchTerm = ViewBag.currentSearch }, new { @class = "glyphicon glyphicon-arrow-down" })
+                    @Html.ActionLink(" ", "Index", new { sortTerm = "ByNameDescending", searchTerm = ViewBag.currentSearch }, new { @class = "glyphicon glyphicon-arrow-up" })
                 </th>
                 <th>
                     Make Abbreviation

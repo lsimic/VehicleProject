@@ -10,6 +10,6 @@ namespace VehicleProject.Repository
         void Update(VehicleModelEntity entity);
         void Delete(VehicleModelEntity entity);
         VehicleModelEntity GetById(Guid id);
-        IPagedList<VehicleModelEntity> GetPaged(int pageSize, int pageNumber, string filterId, string sortTerm);
+        IPagedList<VehicleModelEntity> GetPaged(int pageSize, int pageNumber, string filterId, string sortTerm, string searchTerm);
     }
 }
